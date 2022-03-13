@@ -1,6 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class GameManager {
     public static void main(String[] args) {
         Human player = new Human(10);
@@ -11,15 +12,13 @@ public class GameManager {
         System.out.println("player 2 の名前を入力してください :");
         enemy.SetName();
 
-        BattleSystem battleSystem = new BattleSystem(player.hp, player.attack, enemy.hp, enemy.attack);
+        BattleSystem battleSystem = new BattleSystem(player.hp, player.attack, player.name, enemy.hp, enemy.attack,enemy.name);
+        
+        battleSystem.Start();
 
         //Debug
         System.out.println(player.name);
-        System.out.println(enemy.name);
-
-
-
-        
+        System.out.println(enemy.name);        
     }
 }
 
@@ -59,10 +58,28 @@ class Human {
 class BattleSystem {
     int playerHp;
     int enemyHp;
-    
+    int playerAt;
+    int enemyAt;
 
-    public BattleSystem(int hp, int attack, int hp2, int attack2) {
+    String playerName;
+    String enemyName;
+    
+    public BattleSystem(int hp, int attack, String name, int hp2, int attack2, String name2) {
         this.playerHp = hp;
         this.enemyHp = hp2;
-    }   
+        this.playerAt = attack;
+        this.enemyAt = attack2;
+        this.playerName = name;
+        this.enemyName = name2;
+    }
+    
+    public void Start() {
+        System.out.println("----開始-----");
+
+        while (playerHp < 0 | enemyHp < 0) {
+            
+        }
+
+        
+    }
 }
