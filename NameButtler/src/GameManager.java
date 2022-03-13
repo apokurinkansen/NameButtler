@@ -11,9 +11,16 @@ public class GameManager {
         System.out.println("player 2 の名前を入力してください :");
         enemy.SetName();
 
+        BattleSystem battleSystem = new BattleSystem(player.hp, player.attack, enemy.hp, enemy.attack);
         
+        
+
         System.out.println(player.name);
         System.out.println(enemy.name);
+
+
+
+        
     }
 }
 
@@ -50,7 +57,16 @@ class Human {
     }
 }
 
-class ButtleSystem {
+class BattleSystem {
+    int playerHp;
+    int enemyHp;
+    
+
+    public BattleSystem(int hp, int attack, int hp2, int attack2) {
+        
+    }
+
+
     
     
 }
