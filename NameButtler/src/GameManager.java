@@ -12,9 +12,8 @@ public class GameManager {
         enemy.SetName();
 
         BattleSystem battleSystem = new BattleSystem(player.hp, player.attack, enemy.hp, enemy.attack);
-        
-        
 
+        //Debug
         System.out.println(player.name);
         System.out.println(enemy.name);
 
@@ -63,10 +62,7 @@ class BattleSystem {
     
 
     public BattleSystem(int hp, int attack, int hp2, int attack2) {
-        
-    }
-
-
-    
-    
+        this.playerHp = hp;
+        this.enemyHp = hp2;
+    }   
 }
