@@ -18,6 +18,7 @@ public class GameManager {
 }
 
 class Human {
+    
     String name;
     int hp;
     int attack;
