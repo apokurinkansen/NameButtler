@@ -11,7 +11,7 @@ public class GameManager {
         System.out.println("player 2 の名前を入力してください :");
         enemy.SetName();
 
-        //Debug
+        
         System.out.println(player.name);
         System.out.println(enemy.name);
     }
