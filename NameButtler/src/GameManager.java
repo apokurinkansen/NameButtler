@@ -16,24 +16,17 @@ public class GameManager {
         System.out.println("player 1 の名前を入力してください:");
         player.SetName();
         player.hp = generateNumber(player.name, 0);
-        System.out.println("playerHp:" + player.hp);
         player.attack = generateNumber(player.name, 2);
-        System.out.println("playerAt:" + player.attack);
         player.def = random.nextInt(generateNumber(player.name, 2));
-        System.out.println("playerDef:" + player.def);
         player.luck = generateNumber(player.name, 3);
         System.out.println("player 2 の名前を入力してください:");
         enemy.SetName();
         enemy.hp = generateNumber(enemy.name, 0);
-        System.out.println("enemyHp:" + enemy.hp);
         enemy.attack = generateNumber(enemy.name, 2);
-        System.out.println("enemyAt:" + enemy.attack);
         enemy.def = random.nextInt(generateNumber(enemy.name, 2));
-        System.out.println("enemyDef:" + enemy.def);
         enemy.luck = generateNumber(enemy.name, 3);
-        System.out.println("enemyLuck:" + enemy.luck);
         BattleSystem battleSystem = new BattleSystem(player.hp, player.attack,player.def,player.luck, player.name, enemy.hp, enemy.attack,enemy.def,
-                enemy.luck,enemy.name);
+                enemy.luck, enemy.name);
         battleSystem.Start();
     }
 
@@ -127,9 +120,7 @@ class BattleSystem {
         this.enemyDef = def2;
         this.playerLuck = luck / 10;
         this.enemyLuck = luck2 / 10;
-        System.out.println("playerLuck:" + playerLuck);
-        System.out.println("enemyLuck:" + enemyLuck);
-    }
+        }
     
     public void Start() {
         System.out.println("----ゲーム開始-----");
@@ -163,22 +154,10 @@ class BattleSystem {
         allDamage = 0;
         criticalParcent = 0;
         criticalRandom = 0;
-        criticalLuck = random.nextInt(playerLuck);
-
+        criticalLuck = playerLuck;
         criticalParcent = Criticaler(criticalParcent, criticalLuck);
-        //Debug
-        System.out.println("criticalParsent:" + criticalParcent);
-
         criticalRandom = random.nextInt(100) + 1;
-
-        System.out.println(criticalRandom); //43
-
-        //TODO ランダムで数値を決定し、2で割り切れる数値の時のみ会心の一撃を。
-        //TDOO luckから数値を取得　OK
-        //TODO 数値によって確率を変更 例えば......luckが0から10ならcritical%を10に。luckが11から50ならcritical%を50に。luckが51から255ならcriticalを80%に。　OK
-        //TODO critical%を決めたら、criticalDamageをrandomで数値を決める。 OK
-        //TODO criticalRandomの数値が、critical%を上回っていたら決定
-
+        
         if (criticalRandom < criticalParcent) {
             System.out.println("クリティカル!");
             allDamage = playerAt;
@@ -200,9 +179,18 @@ class BattleSystem {
 
     public void EnemyAction() {
         System.out.format("%sの攻撃!\n", enemyName);
-        int allDamage = 0;
+        allDamage = 0;
+        criticalParcent = 0;
+        criticalRandom = 0;
+        criticalLuck = enemyLuck;
+        criticalParcent = Criticaler(criticalParcent, criticalLuck);
+        criticalRandom = random.nextInt(100) + 1;
 
-        if (enemyAt > playerDef) {
+        if (criticalRandom < criticalParcent) {
+            System.out.println("クリティカル!");
+            allDamage = enemyAt;
+            playerHp -= allDamage;
+        } else {
             allDamage = enemyAt - playerDef;
             playerHp -= allDamage;
         }
