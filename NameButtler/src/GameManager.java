@@ -111,6 +111,10 @@ class BattleSystem {
     String playerName;
     String enemyName;
     Random random = new Random();
+    private int allDamage;
+    private int criticalParcent;
+    private int criticalRandom;
+    private int criticalLuck;
     
     public BattleSystem(int hp, int attack, int def, int luck, String name, int hp2, int attack2, int def2, int luck2, String name2) {
         this.playerHp = hp * 2;
@@ -156,28 +160,19 @@ class BattleSystem {
         
     public void PlayerAction() {
         System.out.format("%sの攻撃!\n", playerName);
-        int allDamage = 0;
-        int criticalParcent = 0;
-        int criticalRandom = 0;
-        int criticalLuck = 0;
+        allDamage = 0;
+        criticalParcent = 0;
+        criticalRandom = 0;
         criticalLuck = random.nextInt(playerLuck);
 
-        if (criticalLuck <= 40) {
-            criticalParcent = 10;
-        }
-        if (criticalLuck > 40 && criticalLuck <= 100) {
-            criticalParcent = 30;
-        }
-        if (criticalLuck > 100 && criticalLuck <= 200) {
-            criticalParcent = 50;
-        }
+        criticalParcent = Criticaler(criticalParcent, criticalLuck);
         //Debug
         System.out.println("criticalParsent:" + criticalParcent);
-        
+
         criticalRandom = random.nextInt(100) + 1;
 
         System.out.println(criticalRandom); //43
-        
+
         //TODO ランダムで数値を決定し、2で割り切れる数値の時のみ会心の一撃を。
         //TDOO luckから数値を取得　OK
         //TODO 数値によって確率を変更 例えば......luckが0から10ならcritical%を10に。luckが11から50ならcritical%を50に。luckが51から255ならcriticalを80%に。　OK
@@ -192,22 +187,21 @@ class BattleSystem {
             allDamage = playerAt - enemyDef;
             enemyHp -= allDamage;
         }
-        
+
         if (allDamage <= 0) {
-            System.out.format("%sの攻撃はミス!",playerName);
+            System.out.format("%sの攻撃はミス!", playerName);
         } else {
             System.out.format("%sに%dのダメージ!\n", enemyName, allDamage);
         }
-        
         if (enemyHp <= 0) {
             state = TrunFase.endFase;
         }
     }
-    
+
     public void EnemyAction() {
         System.out.format("%sの攻撃!\n", enemyName);
         int allDamage = 0;
-        
+
         if (enemyAt > playerDef) {
             allDamage = enemyAt - playerDef;
             playerHp -= allDamage;
@@ -217,6 +211,22 @@ class BattleSystem {
         } else {
             System.out.format("%sに%dのダメージ!\n", playerName, allDamage);
         }
+    }
+    
+    private int Criticaler(int criticalParcent, int criticalLuck) {
+        if (criticalLuck <= 5) {
+            criticalParcent = 10;
+        }
+        if (criticalLuck > 5 && criticalLuck <= 7) {
+            criticalParcent = 30;
+        }
+        if (criticalLuck > 7 && criticalLuck <= 20) {
+            criticalParcent = 50;
+        }
+        if (criticalLuck > 20) {
+            criticalParcent = 80;
+        }
+        return criticalParcent;
     }
     
     private void EnemyWinner() {
