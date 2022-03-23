@@ -14,20 +14,20 @@ public class GameManager {
         Human enemy = new Human();
         Random random = new Random();
         System.out.println("player 1 の名前を入力してください:");
+        SetStates(player, random);
+        System.out.println("player 2 の名前を入力してください:");
+        SetStates(enemy, random);
+        BattleSystem battleSystem = new BattleSystem(player.hp, player.attack,player.def,player.luck, player.name, enemy.hp, enemy.attack,enemy.def,
+                enemy.luck, enemy.name);
+        battleSystem.Start();
+    }
+
+    private static void SetStates(Human player, Random random) {
         player.SetName();
         player.hp = generateNumber(player.name, 0);
         player.attack = generateNumber(player.name, 2);
         player.def = random.nextInt(generateNumber(player.name, 2));
         player.luck = generateNumber(player.name, 3);
-        System.out.println("player 2 の名前を入力してください:");
-        enemy.SetName();
-        enemy.hp = generateNumber(enemy.name, 0);
-        enemy.attack = generateNumber(enemy.name, 2);
-        enemy.def = random.nextInt(generateNumber(enemy.name, 2));
-        enemy.luck = generateNumber(enemy.name, 3);
-        BattleSystem battleSystem = new BattleSystem(player.hp, player.attack,player.def,player.luck, player.name, enemy.hp, enemy.attack,enemy.def,
-                enemy.luck, enemy.name);
-        battleSystem.Start();
     }
 
     public static int generateNumber(String name, int index) {
